@@ -1,0 +1,59 @@
+/* src/components/MonthView.css */
+
+.month {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+  }
+  
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  
+  .day-cell, .empty-cell {
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+  }
+  
+  .empty-cell {
+    background-color: #f9f9f9;
+  }
+  
+.day-cell {
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .day-cell:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .empty-cell {
+    background-color: #f9f9f9;
+  }
+  
+  .months-grid{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .calender-title{
+    text-align: center;
+  }

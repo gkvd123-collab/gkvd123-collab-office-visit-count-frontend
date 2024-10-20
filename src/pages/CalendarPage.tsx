@@ -1,7 +1,8 @@
 // src/components/Calendar.tsx
 import React, { useState } from 'react';
-import MonthView from './MonthView';
+import MonthView from '../components/MonthView';
 import { monthNames } from '../utils';
+import Header from '../components/Header';
 
 interface CalendarProps {
   year: number;
@@ -16,6 +17,8 @@ const Calendar: React.FC<CalendarProps> = ({ year }) => {
   };
 
   return (
+    <>
+     <Header /> 
     <div className="calendar">
       <h1 className='calender-title'>Yearly Calendar - {year}</h1>
       {selectedDate && <p className='calender-title'>Selected Date: {selectedDate}</p>}
@@ -32,6 +35,7 @@ const Calendar: React.FC<CalendarProps> = ({ year }) => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 

@@ -6,7 +6,9 @@ interface ErrorResponse {
 }
 
 // Set the base URL for the API
-const API_BASE_URL = 'https://office-visit-count-backend.onrender.com/api';
+// const API_BASE_URL = 'https://office-visit-count-backend.onrender.com/api';
+const API_BASE_URL = 'http://localhost:5000/api';
+
 
 // Define types for the User and Date objects
 export interface User {
@@ -38,7 +40,7 @@ export const registerUser = async (username: string, password: string, name: str
 };
 
 // Login a user
-export const loginUser = async (username: string, password: string): Promise<{ token: string }> => {
+export const loginUser = async (username: string, password: string): Promise<{ token: string,name:string }> => {
     try {
         const response = await axios.post(`${API_BASE_URL}/auth/login`, {
             username,

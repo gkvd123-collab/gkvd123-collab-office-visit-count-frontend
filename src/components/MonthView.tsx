@@ -1,13 +1,15 @@
 // src/components/MonthView.tsx
 import React from 'react';
-import { getDaysInMonth, getFirstDayOfMonth, weekDays } from '../utils';
+import { getDaysInMonth, getFirstDayOfMonth, getWeekday, weekDays } from '../utils';
 import './MonthView.css';
+import { DateEntry } from '../services/api';
 
 interface MonthViewProps {
   year: number;
   monthIndex: number;
   monthName: string;
   onDateClick: (date: string) => void;
+  onDutyDates?: DateEntry[];
 }
 
 const MonthView: React.FC<MonthViewProps> = ({
@@ -15,6 +17,7 @@ const MonthView: React.FC<MonthViewProps> = ({
   monthIndex,
   monthName,
   onDateClick,
+  onDutyDates
 }) => {
   const daysInMonth = getDaysInMonth(year, monthIndex);
   const firstDay = getFirstDayOfMonth(year, monthIndex);
@@ -28,15 +31,23 @@ const MonthView: React.FC<MonthViewProps> = ({
     <div key={`e-${i}`} className="empty-cell" />
   ));
 
-  const dayCells = Array.from({ length: daysInMonth }, (_, i) => (
-    <div
-      key={`d-${i + 1}`}
-      className="day-cell"
-      onClick={() => handleDayClick(i + 1)}
-    >
-      {i + 1}
-    </div>
-  ));
+  const onDutyDateStrings = onDutyDates?.map((onDutydate) =>
+    new Date(onDutydate.date).toISOString().split('T')[0]
+  );
+  const dayCells = Array.from({ length: daysInMonth }, (_, i) => {
+    const day = i + 1;
+    
+    const weekdayIndex = getWeekday(year, monthIndex, day);
+    const isWeekend = weekdayIndex === 0 || weekdayIndex === 6;
+    const dateStr = `${year}-${String(monthIndex + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+    const isOnDuty = onDutyDateStrings?.includes(dateStr);
+    return (
+      <div key={`d-${day}`} className={isWeekend ? 'disabled-day' :isOnDuty ? 'on-duty-day' : 'day-cell'} 
+        onClick={!(isWeekend || isOnDuty) ? () => handleDayClick(day) : undefined}>
+        {day}
+      </div>
+    );
+  });
 
   return (
     <div className="month">
